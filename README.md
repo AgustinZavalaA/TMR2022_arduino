@@ -1,5 +1,5 @@
 # TMR2022_arduino
-Codigo para codigos de control y prueba del TMR2022
+Codigo para codigos de control y prueba del TMR2022. Francisco
 
 ## TODO:
 - [ ] Codigo completo (leer).
