@@ -48,8 +48,10 @@ def arco(grados):
 # Alch no sé como piensas pasarle los valores reales pa no le sé al pov xd
 # Pero creo recordar que tenías una declaración de cada uno de ellos por ahí, así que jala papi
 
-vec = [51, 5, 15, 51, 51, 51, 51]
+vec = [0.0, 51, 52, 51, 51, 51, 51]
 angulos = [90, 225, 180, 135, 45, 0, 315]
+
+vec_ustin = vec
 
 vec_prueba = [100, 80, 150]
 angulos_prueba = [70, 210, 310]
@@ -63,9 +65,9 @@ sum_Vx = 0
 sum_Vy = 0
 
 # for para sacar la suma del vector Vx y Vy
-for i in range(len(vec_prueba)):
-    Vx = vec_prueba[i] * cos(angulos_prueba[i])
-    Vy = vec_prueba[i] * sen(angulos_prueba[i])
+for i in range(len(vec_ustin)):
+    Vx = vec_ustin[i] * cos(angulos[i])
+    Vy = vec_ustin[i] * sen(angulos[i])
     print('La operacion hasta el momento acumula: ' + str(Vx))
     sum_Vx = sum_Vx + Vx
     sum_Vy = sum_Vy + Vy
@@ -75,10 +77,13 @@ print('Valor de la suma del vector de Y: ' + str(sum_Vy))
 Vr = ((((sum_Vx)**2) + ((sum_Vy)**2)) ** (0.5))
 
 div = sum_Vy / sum_Vx
-A = arco(div)
+A = arco(div) 
 
-if A < 0:
-    A = A + 180
+# if A < 0:
+#     A = A + 180
+
+if sum_Vy < 0:
+    A += 180
 
 print('Valor del vector resultante: ' + str(Vr))
 print('Valor del angulo: ' + str(A))
