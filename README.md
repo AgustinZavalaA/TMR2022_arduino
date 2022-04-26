@@ -1,5 +1,5 @@
 # TMR2022_arduino
-Codigo para codigos de control y prueba del TMR2022. Francisco
+Codigo para codigos de control y prueba del TMR2022.
 
 ## TODO:
 - [ ] Codigo completo (leer).
@@ -12,6 +12,8 @@ Codigo para codigos de control y prueba del TMR2022. Francisco
 | Archivo | Descripcion | 
 |---|---|
 | CompleteTMR2022 | Programa completo que se usara en la competencia, debe ser el mas completo y probablemente contenga a los demas archivos dentro. |
+| moveServoToPos | Programa que mueve el servo a una posicion determinada en la terminal de serial. |
+| move_2_servos_to_pos | Programa que mueve 2 servos a una posicion determinada en la terminal de serial. |
 | PruebaServosGarra | Programa que subira y bajara los motores en intervalos de tiempo para probar la funcionalidad de los servos |
 | PruebaUltrasonicos | Programa que mostrara en serial los valores de ultrasonicos |
 | PruebaMPU9050 | Programa que mostrara en serial los valores de aceleracion y giroscopio |
