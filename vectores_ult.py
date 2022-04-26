@@ -40,6 +40,10 @@ def cos(grados):
 def sen(grados):
     return math.sin(math.radians(grados))
 
+#Arco function that return the degree of the input
+def arco(grados):
+    return math.degrees(math.atan(grados))
+
 # Prueba de valores de los ultrasónicos
 # Alch no sé como piensas pasarle los valores reales pa no le sé al pov xd
 # Pero creo recordar que tenías una declaración de cada uno de ellos por ahí, así que jala papi
@@ -65,9 +69,17 @@ for i in range(len(vec_prueba)):
     print('La operacion hasta el momento acumula: ' + str(Vx))
     sum_Vx = sum_Vx + Vx
     sum_Vy = sum_Vy + Vy
-print(sum_Vx)
-print(sum_Vy)
+print('Valor de la suma del vector de X: ' + str(sum_Vx))
+print('Valor de la suma del vector de Y: ' + str(sum_Vy))
 
 Vr = ((((sum_Vx)**2) + ((sum_Vy)**2)) ** (0.5))
 
-print(Vr)
+div = sum_Vy / sum_Vx
+A = arco(div)
+
+if A < 0:
+    A = A + 180
+
+print('Valor del vector resultante: ' + str(Vr))
+print('Valor del angulo: ' + str(A))
+
