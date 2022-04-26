@@ -71,25 +71,3 @@ print(sum_Vy)
 Vr = ((((sum_Vx)**2) + ((sum_Vy)**2)) ** (0.5))
 
 print(Vr)
-
-"""
-la entrada esperada es un vector de tamaño 7, con las medidas mas recientes de los ultrasonicos (son 7), cada uno con un rango de (0,51) cm.
-Cada vector ya trae un angulo dependiendodel indice, son los siguientes:
-
-0: 90°
-1: 225°
-2: 180°
-3: 135°
-4: 45°
-5: 0°
-6: 315°
-
-   3   0   4
-    \  |  /
-2 --       -- 5
-    /     \ 
-    1      6
-    
-la salida que se espera es una tupla que representen la magnitud y el angulo del vector resultante por ejemplo:
-(5, 90) # significa que el vector resultante es de magnitud 5 y con angulo de 90 grados
-"""
