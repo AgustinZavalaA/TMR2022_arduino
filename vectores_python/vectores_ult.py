@@ -52,8 +52,8 @@ def calculate_vector(distance_vector: list[float], angle_vector: list[int]) -> t
     div = sum_vy / sum_vx
     angle_result_vector = arco(div)
 
-    '''if angle_result_vector < 0:
-        angle_result_vector = angle_result_vector + 180'''
+    if angle_result_vector < 0:
+        angle_result_vector = angle_result_vector + 180
 
     return sum_vx, sum_vy, angle_result_vector, result_vector
 
