@@ -22,7 +22,10 @@ void calculate_vector() {
   angle_vector = degrees(atan(division));
 
   if (angle_vector < 0) {
-    angle_vector = angle_vector + 180;    
+    angle_vector = angle_vector + 180; 
+  }
+  if (sum_vy < -0.01) {
+    angle_vector = angle_vector + 180;
   }
 }
 
