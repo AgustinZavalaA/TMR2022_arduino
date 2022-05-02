@@ -1,3 +1,37 @@
+# tareas 1 de mayo
+JESUS
+implementar codigo de ultrasonicos en el complete, poner de rango (-180, 180) siendo 0 el angulo de enfrente, esto para hacer menos calculos en la raspberry, enviar componente en x, y, magnitud y angulo del vector resultante.
+40 MIN
+
+Implementar el codigo del sensor laser en el complete.
+30 MIN
+
+Codificar el detectamiento de atascamiento.
+40 MIN
+
+Implementar el codigo de atascamiento en complete.
+30MIN
+
+FRANCISCO
+Terminar tabla de reparaciones.
+40 MIN
+
+Hacer cableado de lo que falte.
+30-40 MIN
+
+JUANA
+Ensamblaje de garra
+40 MIN
+
+Prueba de rangos de servos
+20 MIN
+
+TODOS
+preparar scripts de movimientos indivivuales, (recoger latas, depositar latas)
+
+hacer base de codigo en python para llamar los switches desde raspberry y no arduino
+
+
 # TMR2022_arduino
 Codigo para codigos de control y prueba del TMR2022.
 
