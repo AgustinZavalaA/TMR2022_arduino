@@ -4,6 +4,8 @@
 #include <Ultrasonic.h>  // Ultrasonic interface
 #include <Wire.h>
 #include "ServoController.h"
+#include <Adafruit_VL53L0X.h>
+#include  <math.h>
 
 // Constants
 const bool ON_PC = false;   // default = false, true for always output to serial
@@ -29,8 +31,27 @@ ServoController servos;
 //Mode variables
 char modes[9][10] = {"CONTROL R", "BRAZO UP ", "BRAZO DWN", "CHARO UP ", "CHARO DWN", "PENDIENTE", "PENDIENTE", "PENDIENTE"};
 
-//void updateDisplay();
+// Adagruit VL53L0X
+Adafruit_VL53L0X lox = Adafruit_VL53L0X();
 
+// Ultrasonic vectors
+/*
+0: 180°
+1: 315°
+2: 270°
+3: 225°
+4: °
+5: 0°
+6: 315°
+
+Lastest degrees: 90, 225, 180, 135, 45, 0, 315
+*/
+// int ultrasonic_distances[7] = {5, 5, 5, 5, 5, 5, 5};
+const int ultrasonic_angles[] = {180, 315, 270, 225, 135, 90, 45};
+double magnitud_vector, angle_vector;
+double component_x, component_y;
+
+//void updateDisplay();
 
 void setup() {
     // Initialize built-in led
@@ -44,8 +65,13 @@ void setup() {
     if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
         Serial.println(F("SSD1306 allocation failed"));
     }
-
+    //
+    if (!lox.begin()) {
+    Serial.println(F("Error al iniciar VL53L0X"));
+    while(1);
+    }
     delay(1000);
+    
 }
 
 void loop() {
@@ -74,6 +100,9 @@ void loop() {
     ultrasonicValues[4] = u5.Ranging(CM);
     ultrasonicValues[5] = u6.Ranging(CM);
     ultrasonicValues[6] = u7.Ranging(CM);
+    // Calculate vector xd
+    calculate_vector();
+    
     // Buttons
     btnChange = digitalRead(btnInputPin[0]);
     //while(digitalRead(btnInputPin[0])) {}
@@ -111,6 +140,8 @@ void loop() {
       while(digitalRead(btnInputPin[1])){}
     }
 
+    
+
     // Forced delay
     delay(DELAY_VALUE);
 }
@@ -141,6 +172,32 @@ void sendData() {
     Serial.print(',');
     Serial.print(ultrasonicValues[6]);
     Serial.println();
+}
+
+void calculate_vector() {
+  double vx = 0, vy = 0;
+  double sum_vx = 0, sum_vy = 0;
+
+  for (int i = 0; i < 7; i++) {
+    vx = ultrasonicValues[i] * cos(radians(ultrasonic_angles[i]));
+    vy = ultrasonicValues[i] * sin(radians(ultrasonic_angles[i]));
+    sum_vx += vx;
+    sum_vy += vy;
+  }
+
+  component_x = sum_vx;
+  component_y = sum_vy;
+  
+  magnitud_vector = pow(pow(sum_vx, 2) + pow(sum_vy, 2), 0.5);
+  double division = sum_vy / sum_vx;
+  angle_vector = degrees(atan(division));
+
+  if (angle_vector < 0) {
+    angle_vector = angle_vector + 180; 
+  }
+  if (sum_vy < -0.01) {
+    angle_vector = angle_vector + 180;
+  }
 }
 
 void updateDisplay() {
