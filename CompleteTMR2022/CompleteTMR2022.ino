@@ -4,7 +4,7 @@
 #include <Ultrasonic.h>  // Ultrasonic interface
 #include <Wire.h>
 #include "ServoController.h"
-
+#include  <math.h>
 // Constants
 const bool ON_PC = false;   // default = false, true for always output to serial
 const int DELAY_VALUE = 5;  // default = 5,     forced delay after every read from the sensors
@@ -29,8 +29,23 @@ ServoController servos;
 //Mode variables
 char modes[9][10] = {"CONTROL R", "BRAZO UP ", "BRAZO DWN", "CHARO UP ", "CHARO DWN", "PENDIENTE", "PENDIENTE", "PENDIENTE"};
 
-//void updateDisplay();
+// Ultrasonic vectors
+/*
+0: 180°
+1: 315°
+2: 270°
+3: 225°
+4: °
+5: 0°
+6: 315°
 
+Lastest degrees: 90, 225, 180, 135, 45, 0, 315
+*/
+int ultrasonic_distances[7] = {5, 5, 5, 5, 5, 5, 5};
+const int ultrasonic_angles[] = {180, 315, 270, 225, 135, 90, 45};
+double magnitud_vector, angle_vector;
+
+//void updateDisplay();
 
 void setup() {
     // Initialize built-in led
@@ -40,6 +55,9 @@ void setup() {
     //Initiaize Serial
     Serial.begin(115200);
     Serial.setTimeout(TIMEOUT);
+    calculate_vector();
+    Serial.println(magnitud_vector);
+    Serial.println(angle_vector );
     // Initialize OLED screen
     if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
         Serial.println(F("SSD1306 allocation failed"));
@@ -141,6 +159,29 @@ void sendData() {
     Serial.print(',');
     Serial.print(ultrasonicValues[6]);
     Serial.println();
+}
+
+void calculate_vector() {
+  double vx = 0, vy = 0;
+  double sum_vx = 0, sum_vy = 0;
+
+  for (int i = 0; i < 7; i++) {
+    vx = ultrasonic_distances[i] * cos(radians(ultrasonic_angles[i]));
+    vy = ultrasonic_distances[i] * sin(radians(ultrasonic_angles[i]));
+    sum_vx += vx;
+    sum_vy += vy;
+  }
+  
+  magnitud_vector = pow(pow(sum_vx, 2) + pow(sum_vy, 2), 0.5);
+  double division = sum_vy / sum_vx;
+  angle_vector = degrees(atan(division));
+
+  if (angle_vector < 0) {
+    angle_vector = angle_vector + 180; 
+  }
+  if (sum_vy < -0.01) {
+    angle_vector = angle_vector + 180;
+  }
 }
 
 void updateDisplay() {
